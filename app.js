@@ -5,6 +5,9 @@ const app = express()
 
 let port = 8000
 
+// its for jwt
+let screetKey = 'screet'
+
 app.get('/api', (req, res) => {
    res.json({
        message : "Welcome gaes"
@@ -12,7 +15,7 @@ app.get('/api', (req, res) => {
 })
 
 app.post('/api/posts', verifyToken, (req, res) => {
-    jwt.verify(req.token, 'screet', (err, authData) => {
+    jwt.verify(req.token, screetKey, (err, authData) => {
         if (err) {
             res.sendStatus(403);
         } else {
@@ -33,7 +36,7 @@ app.post('/api/login', (req, res) => {
         email: 'alifmaheven2001@gmail.com' 
     }
 
-    jwt.sign({user}, 'screet',{expiresIn: '30s'},(err, token) => {
+    jwt.sign({user}, screetKey,{expiresIn: '30s'},(err, token) => {
          res.json({
              token: token
          });
